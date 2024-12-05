@@ -15,17 +15,17 @@ import javax.swing.JComboBox;
 import javax.swing.JTextField;
 
 import com.toedter.calendar.JDateChooser;
+
 public class Controller {
 
     public static boolean checkInput(
-            JTextField nikField, JTextField namaField, JTextField tempatLahirField, JDatePickerImpl datePicker,
+            JTextField nikField, JTextField namaField, JTextField tempatLahirField, JDateChooser datePicker,
             ButtonGroup genderGroup, ButtonGroup bloodGroup, JTextField alamatField, JTextField rtField,
             JTextField rwField, JTextField kelurahanField, JTextField kecamatanField, JComboBox<String> agamaComboBox,
             JComboBox<String> perkawinanBox, JCheckBox karyawanSwastaCheck, JCheckBox pnsCheck,
             JCheckBox wiraswastaCheck, JCheckBox akademisiCheck, JCheckBox pengangguranCheck,
             ButtonGroup citizenshipGroup, JTextField citizenshipField, File photoFile, File signatureFile,
             JTextField tglBerlakuField, JTextField kotaPembuatanField, JDatePickerImpl tglPembuatanPicker) {
-
         if (nikField.getText().trim().isEmpty()
                 || namaField.getText().trim().isEmpty()
                 || tempatLahirField.getText().trim().isEmpty()
@@ -40,27 +40,22 @@ public class Controller {
                 || agamaComboBox.getSelectedIndex() == -1
                 || perkawinanBox.getSelectedIndex() == -1
                 || (!karyawanSwastaCheck.isSelected()
-                        && !pnsCheck.isSelected()
-                        && !wiraswastaCheck.isSelected()
-                        && !akademisiCheck.isSelected()
-                        && !pengangguranCheck.isSelected())
+                && !pnsCheck.isSelected()
+                && !wiraswastaCheck.isSelected()
+                && !akademisiCheck.isSelected()
+                && !pengangguranCheck.isSelected())
                 || citizenshipGroup.getSelection() == null
                 || (citizenshipGroup.getSelection().getActionCommand().equals("WNA")
-                        && citizenshipField.getText().trim().isEmpty())
+                && citizenshipField.getText().trim().isEmpty())
                 || photoFile == null
                 || signatureFile == null
                 || tglBerlakuField.getText().trim().isEmpty()
                 || kotaPembuatanField.getText().trim().isEmpty()
                 || tglPembuatanPicker.getModel().getValue() == null) {
-
             return false;
-
         } else {
-
             return true;
-
         }
-
     }
 
     public static void resetFields(JTextField nikField, JTextField namaField, JTextField tempatLahirField,
@@ -120,165 +115,85 @@ public class Controller {
         String job = "";
 
         if (pengangguranCheck.isSelected()) {
-            
             job = "PENGANGGURAN";
-
-        }
-        else {
-
+        } else {
             if (karyawanSwastaCheck.isSelected()) {
-                
                 listJob.add("KARYAWAN SWASTA");
-
             }
             if (pnsCheck.isSelected()) {
-
                 listJob.add("PNS");
-
             }
             if (wiraswastaCheck.isSelected()) {
-
                 listJob.add("WIRASWASTA");
-
             }
             if (akademisiCheck.isSelected()) {
-
                 listJob.add("AKADEMISI");
-
             }
-
         }
 
         if (listJob.size() > 1) {
-            
             for (int i = 0; i < listJob.size() - 1; i++) {
-                
                 job += listJob.get(i) + ", ";
-
             }
-            
         }
-
         job += listJob.get(listJob.size() - 1);
-        
         return job;
-
     }
-
     public static JenisAgama getJenisAgama(String agama) {
-
         if (agama.equalsIgnoreCase("KRISTEN")) {
-            
             return JenisAgama.KRISTEN;
-
-        }
-        else if (agama.equalsIgnoreCase("KATHOLIK")) {
-            
+        } else if (agama.equalsIgnoreCase("KATHOLIK")) {
             return JenisAgama.KATHOLIK;
-
-        } 
-        else if (agama.equalsIgnoreCase("ISLAM")) {
-            
+        } else if (agama.equalsIgnoreCase("ISLAM")) {
             return JenisAgama.ISLAM;
-
-        } 
-        else if (agama.equalsIgnoreCase("HINDU")) {
-            
+        } else if (agama.equalsIgnoreCase("HINDU")) {
             return JenisAgama.HINDU;
-
-        } 
-        else if (agama.equalsIgnoreCase("BUDDHA")) {
-            
+        } else if (agama.equalsIgnoreCase("BUDDHA")) {
             return JenisAgama.BUDDHA;
-
-        } 
-        else if (agama.equalsIgnoreCase("KONGHUCU")) {
-            
+        } else if (agama.equalsIgnoreCase("KONGHUCU")) {
             return JenisAgama.KONGHUCU;
-
-        } 
-        else {
-            
+        } else {
             return JenisAgama.ADAT_KEPERCAYAAN;
-
-        } 
-
+        }
     }
 
-    public static StatusPerkawinan getStatusPerkawinan(String status) {
-
+public static StatusPerkawinan getStatusPerkawinan(String status) {
         if (status.equalsIgnoreCase("BELUM MENIKAH")) {
-            
             return StatusPerkawinan.BELUM_MENIKAH;
-
-        }
-        else if (status.equalsIgnoreCase("MENIKAH")) {
-            
+        } else if (status.equalsIgnoreCase("MENIKAH")) {
             return StatusPerkawinan.MENIKAH;
-
-        } 
-        else if (status.equalsIgnoreCase("JANDA")) {
-            
+        } else if (status.equalsIgnoreCase("JANDA")) {
             return StatusPerkawinan.JANDA;
-
-        } 
-        else {
-            
+        } else {
             return StatusPerkawinan.DUDA;
-
-        } 
-
+        }
     }
 
     public static String getCitizenship(String citizen, String country) {
-
         String citizenship = "";
-
         if (citizen.equalsIgnoreCase("WNI")) {
-            
             citizenship = "WNI";
-
-        }
-        else {
-
+        } else {
             citizenship = "WNA(" + country + ")";
-
         }
-
         return citizenship;
-
     }
 
     public static KTP createKTP(String nik, String nama, String tempatLahir, String tanggalLahir, JenisKelamin jenisKelamin, String golDarah, String alamat, String rt, String rw, String kelDesa, String kecamatan,
             JenisAgama agama, StatusPerkawinan statusPerkawinan, String pekerjaan, String kewarganegaraan, String wargaNegaraAsal, File photoFile, File signatureFile, String berlakuHingga, String kotaPembuatan, String tanggalPembuatan, int actionValue) {
-        
         KTP ktp = new KTP(nik, nama, tempatLahir, tanggalLahir, jenisKelamin, golDarah, alamat, rt, rw, kelDesa, kecamatan,
-                                agama, statusPerkawinan, pekerjaan, kewarganegaraan, wargaNegaraAsal, photoFile,
-                                signatureFile, berlakuHingga, kotaPembuatan, tanggalPembuatan);
-        
+                agama, statusPerkawinan, pekerjaan, kewarganegaraan, wargaNegaraAsal, photoFile,
+                signatureFile, berlakuHingga, kotaPembuatan, tanggalPembuatan);
         if (actionValue == 1) {
-            
             DBController.insertNewUser(ktp); // ADD TO DATABASE
-
-        }
-        else {
-
+        } else {
             DBController.updateData(ktp);
-
         }
-
         return ktp;
-
     }
 
     public static String[] setSelectedJobs(String jobs) {
-
         String[] listJobs = jobs.split(", ");
-
         return listJobs;
-
     }
-
-
-
 }
