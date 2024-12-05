@@ -14,8 +14,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
 
-import org.jdatepicker.impl.JDatePickerImpl;
-
+import com.toedter.calendar.JDateChooser;
 public class Controller {
 
     public static boolean checkInput(
